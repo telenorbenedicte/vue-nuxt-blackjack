@@ -18,7 +18,7 @@ const cardImages = {
   '8-of-hearts': '/images/cards/041-eight-of-clubs.png',
   '9-of-hearts': '/images/cards/058-nine-of-hearts.png',
   '10-of-hearts': '/images/cards/059-ten-of-hearts.png',
-  'jack-of-hearts': '/images/cards/075-jack.png',
+  'jack-of-hearts': '/images/cards/059-jack-of-hearts.png',
   'queen-of-hearts': '/images/cards/060-queen-of-hearts.png',
   'king-of-hearts': '/images/cards/061-king-of-hearts.png',
   
@@ -33,7 +33,7 @@ const cardImages = {
   '9-of-diamonds': '/images/cards/028-nine-of-diamonds.png',
   '10-of-diamonds': '/images/cards/029-ten-of-diamonds.png',
   'jack-of-diamonds': '/images/cards/030-jack-of-diamonds.png',
-  'queen-of-diamonds': '/images/cards/031-queen.png',
+  'queen-of-diamonds': '/images/cards/031-queen-of-diamonds.png',
   'king-of-diamonds': '/images/cards/032-king-of-diamonds.png',
   
   'ace-of-clubs': '/images/cards/033-ace-of-clubs.png',
