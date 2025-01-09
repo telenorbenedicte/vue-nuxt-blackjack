@@ -98,8 +98,8 @@ export default {
   display: flex; /* Use flexbox for centering */
   align-items: center; /* Center horizontally */
   justify-content: center; /* Center vertically */
-  margin: 5px; /* Space between cards */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  /* margin: 5px; */ /* Remove space between cards */
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); */ /* Remove shadow for depth */
 }
 
 .card-image {
