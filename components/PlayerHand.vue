@@ -1,6 +1,6 @@
 <template>
   <div class="player-hand">
-    <h2>Player Hand</h2>
+    <h2 v-if="title">{{ title }}</h2>
     <div class="cards">
       <Card v-for="(card, index) in cards" :key="index" :card="card" />
     </div>
@@ -15,6 +15,10 @@ export default {
     cards: {
       type: Array,
       required: true
+    },
+    title: {
+      type: String,
+      default: ''
     }
   },
   components: {

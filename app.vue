@@ -1,9 +1,14 @@
 <template>
   <div>
-    <PlayerHand :cards="playerCards" />
+    <PlayerHand :cards="playerCards" title="Player's Hand" />
     <button @click="drawCard">Hit</button>
     <button @click="stand">Stand</button>
-    <PlayerHand :cards="dealerCards" />
+    
+    <!-- Display dealer's cards only after the player stands -->
+    <div v-if="gameOver || dealerDrawing">
+      <h2>Dealer's Hand</h2>
+      <PlayerHand :cards="dealerCards" />
+    </div>
     
     <!-- Display scores and result -->
     <div v-if="gameOver">
@@ -26,7 +31,8 @@ export default defineComponent({
       dealerCards: [] as Card[], // Add dealer's cards
       deck: this.createDeck() as Deck, // Use Deck type
       gameOver: false, // Track if the game is over
-      resultMessage: '' // Message to display the result
+      resultMessage: '', // Message to display the result
+      dealerDrawing: false // Track if the dealer is drawing
     };
   },
   computed: {
@@ -59,6 +65,7 @@ export default defineComponent({
       this.playerCards.push(drawnCard); // Add the drawn card to player's hand
     },
     stand() {
+      this.dealerDrawing = true; // Set dealer drawing flag
       // Dealer's turn to draw cards
       while (this.calculateScore(this.dealerCards) < 20) {
         this.drawDealerCard();
