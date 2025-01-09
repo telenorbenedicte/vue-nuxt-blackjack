@@ -173,6 +173,18 @@ export default defineComponent({
 
 .button-container button {
   margin-left: 10px; /* Space between buttons */
+  padding: 15px 30px; /* Increase padding for bigger buttons */
+  font-size: 18px; /* Increase font size */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Add rounded corners */
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.button-container button:hover {
+  background-color: #0056b3; /* Darker background on hover */
 }
 
 .animate-card {
