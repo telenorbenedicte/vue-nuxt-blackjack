@@ -2,7 +2,7 @@
   <div>
     <PlayerHand :cards="player1Cards" />
     <PlayerHand :cards="player2Cards" />
-    <button @click="drawCard">Draw Card</button>
+    <button @click="drawCard">Hit</button>
   </div>
 </template>
 
