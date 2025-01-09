@@ -16,13 +16,16 @@
       </div>
       <PlayerHand v-else :cards="dealerCards" class="dealer-hand" />
     </div>
-    
-    <!-- Display scores and result -->
+
     <div v-if="gameOver">
       <h2>Scores:</h2>
       <p>Player Score: {{ playerScore }}</p>
       <p>Dealer Score: {{ dealerScore }}</p>
-      <h2>{{ resultMessage }}</h2>
+    </div>
+    
+    <!-- Display scores and result -->
+    <div v-if="gameOver" class="result-container">
+      <h2 class="result-text">{{ resultMessage }}</h2>
     </div>
   </div>
 </template>
@@ -205,5 +208,20 @@ export default defineComponent({
   100% {
     transform: translateY(0) rotate(360deg); /* Move to original position and rotate */
   }
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  height: 100%; /* Full height of the container */
+}
+
+.result-text {
+  font-size: 36px; /* Increase font size */
+  font-weight: bold; /* Make text bold */
+  text-align: center; /* Center text */
+  margin: 10px 0; /* Add some margin for spacing */
 }
 </style>
