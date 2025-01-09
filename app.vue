@@ -1,6 +1,6 @@
 <template>
   <div class="game-container">
-    <PlayerHand :cards="playerCards" title="Player's Hand" />
+    <PlayerHand :cards="playerCards" title="Player's Hand" class="player-hand" />
     
     <!-- Button container for positioning -->
     <div class="button-container">
@@ -11,7 +11,7 @@
     <!-- Display dealer's cards only after the player stands -->
     <div v-if="gameOver || dealerDrawing">
       <h2>Dealer's Hand</h2>
-      <PlayerHand :cards="dealerCards" />
+      <PlayerHand :cards="dealerCards" class="dealer-hand" />
     </div>
     
     <!-- Display scores and result -->
@@ -68,6 +68,17 @@ export default defineComponent({
       const drawnCard: Card = this.deck.splice(randomIndex, 1)[0]; // Remove the card from the deck
       this.playerCards.push(drawnCard); // Add the drawn card to player's hand
 
+      // Trigger animation for the player's card
+      this.$nextTick(() => {
+        const cardElement = document.querySelector(`.player-card:last-child`);
+        if (cardElement) {
+          cardElement.classList.add('animate-card');
+          setTimeout(() => {
+            cardElement.classList.remove('animate-card');
+          }, 1000); // Duration of the animation
+        }
+      });
+
       // Check if the player has busted
       if (this.calculateScore(this.playerCards) > 21) {
         console.log('Player busts!'); // Log the bust
@@ -81,12 +92,16 @@ export default defineComponent({
       this.drawDealerCards(); // Start the dealer's turn
     },
     drawDealerCards() {
-      // Dealer's turn to draw cards
-      while (this.calculateScore(this.dealerCards) < 20) {
-        this.drawDealerCard();
-      }
-      this.gameOver = true; // Set game over flag
-      this.determineWinner(); // Determine the winner
+      const drawCardWithDelay = () => {
+        if (this.calculateScore(this.dealerCards) < 20) {
+          this.drawDealerCard(); // Draw a card for the dealer
+          setTimeout(drawCardWithDelay, 1000); // Delay of 1 second before drawing the next card
+        } else {
+          this.gameOver = true; // Set game over flag
+          this.determineWinner(); // Determine the winner
+        }
+      };
+      drawCardWithDelay(); // Start the drawing process
     },
     drawDealerCard() {
       if (this.deck.length === 0) {
@@ -96,6 +111,17 @@ export default defineComponent({
       const randomIndex = Math.floor(Math.random() * this.deck.length);
       const drawnCard: Card = this.deck.splice(randomIndex, 1)[0]; // Remove the card from the deck
       this.dealerCards.push(drawnCard); // Add the drawn card to dealer's hand
+
+      // Trigger animation
+      this.$nextTick(() => {
+        const cardElement = document.querySelector(`.dealer-card:last-child`);
+        if (cardElement) {
+          cardElement.classList.add('animate-card');
+          setTimeout(() => {
+            cardElement.classList.remove('animate-card');
+          }, 1000); // Duration of the animation
+        }
+      });
     },
     calculateScore(cards: Card[]): number {
       let score = 0;
@@ -136,6 +162,7 @@ export default defineComponent({
 .game-container {
   position: relative; /* Position relative for absolute positioning of buttons */
   height: 100vh; /* Full height of the viewport */
+  overflow: hidden; /* Prevent overflow of animated cards */
 }
 
 .button-container {
@@ -146,5 +173,22 @@ export default defineComponent({
 
 .button-container button {
   margin-left: 10px; /* Space between buttons */
+}
+
+.animate-card {
+  animation: moveAndRotate 1s ease forwards; /* Animation for card drawing */
+}
+
+@keyframes moveAndRotate {
+  0% {
+    transform: translateY(100%) rotate(0deg); /* Start from bottom */
+    opacity: 0; /* Start invisible */
+  }
+  50% {
+    opacity: 1; /* Fade in */
+  }
+  100% {
+    transform: translateY(0) rotate(360deg); /* Move to original position and rotate */
+  }
 }
 </style>

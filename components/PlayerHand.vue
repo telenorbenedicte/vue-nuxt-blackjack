@@ -2,7 +2,7 @@
   <div class="player-hand">
     <h2 v-if="title">{{ title }}</h2>
     <div class="cards">
-      <Card v-for="(card, index) in cards" :key="index" :card="card" />
+      <Card v-for="(card, index) in cards" :key="index" :card="card" class="player-card" />
     </div>
   </div>
 </template>
