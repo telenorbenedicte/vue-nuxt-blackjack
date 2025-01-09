@@ -3,6 +3,8 @@
     <PlayerHand :cards="player1Cards" />
     <PlayerHand :cards="player2Cards" />
     <button @click="drawCard">Hit</button>
+    <button @click="stand">Stand</button>
+    <PlayerHand :cards="dealerCards" />
   </div>
 </template>
 
@@ -15,6 +17,7 @@ export default defineComponent({
     return {
       player1Cards: [] as Card[], // Use Card type
       player2Cards: [] as Card[], // Use Card type
+      dealerCards: [] as Card[], // Add dealer's cards
       deck: this.createDeck() as Deck // Use Deck type
     };
   },
@@ -38,6 +41,40 @@ export default defineComponent({
       const randomIndex = Math.floor(Math.random() * this.deck.length);
       const drawnCard: Card = this.deck.splice(randomIndex, 1)[0]; // Remove the card from the deck
       this.player1Cards.push(drawnCard); // Add the drawn card to player 1's hand
+    },
+    stand() {
+      // Dealer's turn to draw cards
+      while (this.calculateScore(this.dealerCards) < 20) {
+        this.drawDealerCard();
+      }
+    },
+    drawDealerCard() {
+      if (this.deck.length === 0) {
+        alert("No more cards in the deck!");
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * this.deck.length);
+      const drawnCard: Card = this.deck.splice(randomIndex, 1)[0]; // Remove the card from the deck
+      this.dealerCards.push(drawnCard); // Add the drawn card to dealer's hand
+    },
+    calculateScore(cards: Card[]): number {
+      let score = 0;
+      let aces = 0;
+
+      for (const card of cards) {
+        score += card.score;
+        if (card.rank === 'Ace') {
+          aces += 1; // Count Aces for adjustment
+        }
+      }
+
+      // Adjust for Aces if score exceeds 21
+      while (score > 21 && aces > 0) {
+        score -= 10; // Count Ace as 1 instead of 11
+        aces -= 1;
+      }
+
+      return score;
     }
   }
 });
