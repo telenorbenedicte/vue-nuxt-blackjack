@@ -28,9 +28,6 @@ export default {
 </script>
 
 <style scoped>
-.player-hand {
-  margin: 20px;
-}
 .cards {
   display: flex;
   flex-wrap: wrap;
