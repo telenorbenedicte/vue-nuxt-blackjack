@@ -1,8 +1,8 @@
 <template>
   <div>
     <PlayerHand :cards="playerCards" title="Player's Hand" />
-    <button @click="drawCard">Hit</button>
-    <button @click="stand">Stand</button>
+    <button @click="drawCard" :disabled="gameOver">Hit</button>
+    <button @click="stand" :disabled="gameOver">Stand</button>
     
     <!-- Display dealer's cards only after the player stands -->
     <div v-if="gameOver || dealerDrawing">
@@ -63,9 +63,17 @@ export default defineComponent({
       const randomIndex = Math.floor(Math.random() * this.deck.length);
       const drawnCard: Card = this.deck.splice(randomIndex, 1)[0]; // Remove the card from the deck
       this.playerCards.push(drawnCard); // Add the drawn card to player's hand
+
+      // Check if the player has busted
+      if (this.calculateScore(this.playerCards) > 21) {
+        console.log('Player busts!'); // Log the bust
+        this.gameOver = true; // Set game over flag
+        this.resultMessage = "Player bust! Dealer wins."; // Set result message
+        this.dealerDrawing = true; // Set dealer drawing flag
+        this.drawDealerCards(); // Automatically continue to the dealer's turn
+      }
     },
-    stand() {
-      this.dealerDrawing = true; // Set dealer drawing flag
+    drawDealerCards() {
       // Dealer's turn to draw cards
       while (this.calculateScore(this.dealerCards) < 20) {
         this.drawDealerCard();
