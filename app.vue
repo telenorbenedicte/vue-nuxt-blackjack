@@ -5,6 +5,15 @@
     <button @click="drawCard">Hit</button>
     <button @click="stand">Stand</button>
     <PlayerHand :cards="dealerCards" />
+    
+    <!-- Display scores and result -->
+    <div v-if="gameOver">
+      <h2>Scores:</h2>
+      <p>Player 1 Score: {{ player1Score }}</p>
+      <p>Player 2 Score: {{ player2Score }}</p>
+      <p>Dealer Score: {{ dealerScore }}</p>
+      <h2>{{ resultMessage }}</h2>
+    </div>
   </div>
 </template>
 
@@ -18,8 +27,21 @@ export default defineComponent({
       player1Cards: [] as Card[], // Use Card type
       player2Cards: [] as Card[], // Use Card type
       dealerCards: [] as Card[], // Add dealer's cards
-      deck: this.createDeck() as Deck // Use Deck type
+      deck: this.createDeck() as Deck, // Use Deck type
+      gameOver: false, // Track if the game is over
+      resultMessage: '' // Message to display the result
     };
+  },
+  computed: {
+    player1Score() {
+      return this.calculateScore(this.player1Cards);
+    },
+    player2Score() {
+      return this.calculateScore(this.player2Cards);
+    },
+    dealerScore() {
+      return this.calculateScore(this.dealerCards);
+    }
   },
   methods: {
     createDeck(): Deck {
@@ -47,6 +69,8 @@ export default defineComponent({
       while (this.calculateScore(this.dealerCards) < 20) {
         this.drawDealerCard();
       }
+      this.gameOver = true; // Set game over flag
+      this.determineWinner(); // Determine the winner
     },
     drawDealerCard() {
       if (this.deck.length === 0) {
@@ -75,6 +99,21 @@ export default defineComponent({
       }
 
       return score;
+    },
+    determineWinner() {
+      const player1FinalScore = this.player1Score;
+      const player2FinalScore = this.player2Score;
+      const dealerFinalScore = this.dealerScore;
+
+      if (player1FinalScore > 21 && player2FinalScore > 21) {
+        this.resultMessage = "Both players bust! Dealer wins.";
+      } else if (dealerFinalScore > 21 || player1FinalScore > dealerFinalScore) {
+        this.resultMessage = "Player 1 wins!";
+      } else if (player2FinalScore > dealerFinalScore) {
+        this.resultMessage = "Player 2 wins!";
+      } else {
+        this.resultMessage = "The dealer wins...";
+      }
     }
   }
 });
