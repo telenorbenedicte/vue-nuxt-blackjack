@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Card, Deck } from './types'; // Import the types
+import { Card, Deck, getCardScore } from './types'; // Import the types and score function
 
 export default defineComponent({
   data() {
@@ -25,7 +25,7 @@ export default defineComponent({
       const deck: Deck = [];
       for (const suit of suits) {
         for (const rank of ranks) {
-          deck.push({ suit, rank });
+          deck.push({ suit, rank, score: getCardScore({ suit, rank, score: 0 }) }); // Initialize score
         }
       }
       return deck;
