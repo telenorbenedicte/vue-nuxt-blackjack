@@ -8,10 +8,13 @@
       <button @click="stand" :disabled="gameOver">Stand</button>
     </div>
     
-    <!-- Display dealer's cards only after the player stands -->
+    <!-- Display dealer's cards or message if no cards drawn -->
     <div v-if="gameOver || dealerDrawing">
       <h2>Dealer's Hand</h2>
-      <PlayerHand :cards="dealerCards" class="dealer-hand" />
+      <div v-if="dealerCards.length === 0">
+        <p>The dealer hasn't drawn any cards.</p>
+      </div>
+      <PlayerHand v-else :cards="dealerCards" class="dealer-hand" />
     </div>
     
     <!-- Display scores and result -->
