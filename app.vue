@@ -1,8 +1,12 @@
 <template>
-  <div>
+  <div class="game-container">
     <PlayerHand :cards="playerCards" title="Player's Hand" />
-    <button @click="drawCard" :disabled="gameOver">Hit</button>
-    <button @click="stand" :disabled="gameOver">Stand</button>
+    
+    <!-- Button container for positioning -->
+    <div class="button-container">
+      <button @click="drawCard" :disabled="gameOver">Hit</button>
+      <button @click="stand" :disabled="gameOver">Stand</button>
+    </div>
     
     <!-- Display dealer's cards only after the player stands -->
     <div v-if="gameOver || dealerDrawing">
@@ -124,3 +128,20 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.game-container {
+  position: relative; /* Position relative for absolute positioning of buttons */
+  height: 100vh; /* Full height of the viewport */
+}
+
+.button-container {
+  position: absolute; /* Position buttons absolutely */
+  bottom: 20px; /* Distance from the bottom */
+  right: 20px; /* Distance from the right */
+}
+
+.button-container button {
+  margin-left: 10px; /* Space between buttons */
+}
+</style>
