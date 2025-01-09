@@ -5,7 +5,7 @@
     <!-- Button container for positioning -->
     <div class="button-container">
       <button @click="drawCard" :disabled="gameOver">Hit</button>
-      <button @click="stand" :disabled="gameOver">Stand</button>
+      <button @click="stand" :disabled="gameOver || playerCards.length === 0">Stand</button>
     </div>
     
     <!-- Display dealer's cards or message if no cards drawn -->
