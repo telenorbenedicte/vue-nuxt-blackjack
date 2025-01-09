@@ -6,20 +6,23 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { Card, Deck } from './types'; // Import the types
+
+export default defineComponent({
   data() {
     return {
-      player1Cards: [],
-      player2Cards: [],
-      deck: this.createDeck() // Initialize the deck
+      player1Cards: [] as Card[], // Use Card type
+      player2Cards: [] as Card[], // Use Card type
+      deck: this.createDeck() as Deck // Use Deck type
     };
   },
   methods: {
-    createDeck() {
+    createDeck(): Deck {
       const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
       const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
-      const deck = [];
+      const deck: Deck = [];
       for (const suit of suits) {
         for (const rank of ranks) {
           deck.push({ suit, rank });
@@ -33,9 +36,9 @@ export default {
         return;
       }
       const randomIndex = Math.floor(Math.random() * this.deck.length);
-      const drawnCard = this.deck.splice(randomIndex, 1)[0]; // Remove the card from the deck
-      this.player1Cards.push(drawnCard); // Add the drawn card to player 1's hand (you can modify this logic)
+      const drawnCard: Card = this.deck.splice(randomIndex, 1)[0]; // Remove the card from the deck
+      this.player1Cards.push(drawnCard); // Add the drawn card to player 1's hand
     }
   }
-};
+});
 </script>
