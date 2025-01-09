@@ -15,7 +15,7 @@ const cardImages = {
   '5-of-hearts': '/images/cards/052-five-of-hearts.png',
   '6-of-hearts': '/images/cards/053-six-of-hearts.png',
   '7-of-hearts': '/images/cards/054-seven-of-hearts.png',
-  '8-of-hearts': '/images/cards/041-eight-of-hearts.png',
+  '8-of-hearts': '/images/cards/055-eight-of-hearts.png',
   '9-of-hearts': '/images/cards/057-nine-of-hearts.png',
   '10-of-hearts': '/images/cards/058-ten-of-hearts.png',
   'jack-of-hearts': '/images/cards/059-jack-of-hearts.png',
