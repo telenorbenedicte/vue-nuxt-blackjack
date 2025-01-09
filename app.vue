@@ -189,6 +189,12 @@ export default defineComponent({
   transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
+.button-container button:disabled {
+  background-color: #ccc; /* Grey background for disabled buttons */
+  color: #666; /* Darker text color for disabled state */
+  cursor: not-allowed; /* Change cursor to indicate disabled state */
+}
+
 .button-container button:hover {
   background-color: #0056b3; /* Darker background on hover */
 }
