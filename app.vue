@@ -73,9 +73,12 @@ export default defineComponent({
         console.log('Player busts!'); // Log the bust
         this.gameOver = true; // Set game over flag
         this.resultMessage = "Player bust! Dealer wins."; // Set result message
-        this.dealerDrawing = true; // Set dealer drawing flag
-        this.drawDealerCards(); // Automatically continue to the dealer's turn
+        // No need to call drawDealerCards() here
       }
+    },
+    stand() {
+      this.dealerDrawing = true; // Set dealer drawing flag
+      this.drawDealerCards(); // Start the dealer's turn
     },
     drawDealerCards() {
       // Dealer's turn to draw cards
