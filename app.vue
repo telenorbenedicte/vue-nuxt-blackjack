@@ -91,12 +91,13 @@ export default defineComponent({
         console.log('Player busts!'); // Log the bust
         this.gameOver = true; // Set game over flag
         this.resultMessage = "Player bust! Dealer wins."; // Set result message
-        // No need to call drawDealerCards() here
       }
+      this.updateGameState(); // Save state after drawing a card
     },
     stand() {
       this.dealerDrawing = true; // Set dealer drawing flag
       this.drawDealerCards(); // Start the dealer's turn
+      this.updateGameState(); // Save state after standing
     },
     drawDealerCards() {
       const drawCardWithDelay = () => {
@@ -129,6 +130,8 @@ export default defineComponent({
           }, 1000); // Duration of the animation
         }
       });
+
+      this.updateGameState(); // Save state after dealer draws a card
     },
     calculateScore(cards: Card[]): number {
       let score = 0;
@@ -160,6 +163,8 @@ export default defineComponent({
       } else {
         this.resultMessage = "The dealer wins...";
       }
+
+      this.updateGameState(); // Save state after determining the winner
     },
     newGame() {
       this.playerCards = [];
@@ -168,6 +173,37 @@ export default defineComponent({
       this.gameOver = false;
       this.resultMessage = '';
       this.dealerDrawing = false;
+      this.updateGameState(); // Save state after starting a new game
+    },
+    saveGameState() {
+      if (process.client) { // Check if running on the client
+        const gameState = {
+          playerCards: this.playerCards,
+          dealerCards: this.dealerCards,
+          deck: this.deck,
+          gameOver: this.gameOver,
+          resultMessage: this.resultMessage,
+          dealerDrawing: this.dealerDrawing,
+        };
+        localStorage.setItem('blackjackGameState', JSON.stringify(gameState));
+      }
+    },
+    updateGameState() {
+      this.saveGameState();
+    },
+  },
+  created() {
+    if (process.client) { // Check if running on the client
+      const savedGameState = localStorage.getItem('blackjackGameState');
+      if (savedGameState) {
+        const gameState = JSON.parse(savedGameState);
+        this.playerCards = gameState.playerCards;
+        this.dealerCards = gameState.dealerCards;
+        this.deck = gameState.deck;
+        this.gameOver = gameState.gameOver;
+        this.resultMessage = gameState.resultMessage;
+        this.dealerDrawing = gameState.dealerDrawing;
+      }
     }
   }
 });
