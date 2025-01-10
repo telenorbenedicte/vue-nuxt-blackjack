@@ -26,6 +26,7 @@
     <!-- Display scores and result -->
     <div v-if="gameOver" class="result-container">
       <h2 class="result-text">{{ resultMessage }}</h2>
+      <button @click="newGame" class="new-game-button">New Game</button>
     </div>
   </div>
 </template>
@@ -159,6 +160,14 @@ export default defineComponent({
       } else {
         this.resultMessage = "The dealer wins...";
       }
+    },
+    newGame() {
+      this.playerCards = [];
+      this.dealerCards = [];
+      this.deck = this.createDeck();
+      this.gameOver = false;
+      this.resultMessage = '';
+      this.dealerDrawing = false;
     }
   }
 });
@@ -229,5 +238,21 @@ export default defineComponent({
   font-weight: bold; /* Make text bold */
   text-align: center; /* Center text */
   margin: 10px 0; /* Add some margin for spacing */
+}
+
+.new-game-button {
+  margin-top: 20px; /* Space above the button */
+  padding: 10px 20px; /* Padding for the button */
+  font-size: 18px; /* Font size */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #28a745; /* Green background color */
+  color: white; /* White text color */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.new-game-button:hover {
+  background-color: #218838; /* Darker green on hover */
 }
 </style>
